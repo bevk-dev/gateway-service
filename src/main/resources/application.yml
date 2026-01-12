@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user_route
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/users/**
+
+        - id: list_route
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/shopping-lists/**, /api/items/**, /api/products/**
+
+        - id: recipe_route
+          uri: http://localhost:8084
+          predicates:
+              - Path=/api/recipes/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
